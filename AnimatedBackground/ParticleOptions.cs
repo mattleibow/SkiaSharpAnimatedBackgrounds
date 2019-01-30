@@ -4,7 +4,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 {
 	public class ParticleOptions
 	{
-		public SKImage? Image { get; set; }
+		public SKImage Image { get; set; }
 
 		public Color BaseColor { get; set; } = Color.Black;
 

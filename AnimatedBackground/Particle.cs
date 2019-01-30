@@ -18,7 +18,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 
 		public double TargetOpacity { get; set; } = 0.0;
 
-		public object? UserState { get; set; }
+		public object UserState { get; set; }
 
 		public double SpeedSquared
 		{

@@ -5,7 +5,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 {
 	public abstract class ParticleRenderer : Renderer
 	{
-		private SKImage? particleImage;
+		private SKImage particleImage;
 
 		private SKPaint _paint;
 		private ParticleOptions _options;
@@ -54,7 +54,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 		public override void Init()
 		{
 			Options = CreateDefaultParticleOptions();
-			_particles.AddRange(GenerateParticles(Options!.ParticleCount));
+			_particles.AddRange(GenerateParticles(Options.ParticleCount));
 		}
 
 		public override void Paint(SKCanvas canvas)
@@ -62,7 +62,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 			if (!IsInitialized)
 				return;
 
-			foreach (var particle in Particles!)
+			foreach (var particle in Particles)
 			{
 				if (particle.Opacity <= double.Epsilon)
 					continue;
@@ -79,7 +79,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 				}
 				else
 				{
-					ParticlePaint!.Color = Options!.BaseColor.ToSKColor().WithAlpha((byte)(particle.Opacity * 255));
+					ParticlePaint.Color = Options.BaseColor.ToSKColor().WithAlpha((byte)(particle.Opacity * 255));
 
 					canvas.DrawCircle(
 						new SKPoint((float)particle.CenterX, (float)particle.CenterY),
@@ -94,7 +94,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 			if (!IsInitialized)
 				return false;
 
-			foreach (var particle in Particles!)
+			foreach (var particle in Particles)
 			{
 				if (!CanvasBounds.Contains(new SKPoint((float)particle.CenterX, (float)particle.CenterY)))
 					InitParticle(particle);
@@ -107,7 +107,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 
 		protected abstract void InitParticle(Particle particle);
 
-		protected virtual void OnOptionsUpdate(ParticleOptions? oldOptions, ParticleOptions newOptions)
+		protected virtual void OnOptionsUpdate(ParticleOptions oldOptions, ParticleOptions newOptions)
 		{
 			if (!IsInitialized)
 				return;
@@ -144,8 +144,8 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 			particle.CenterX += particle.DirectionX * secondsDelta;
 			particle.CenterY += particle.DirectionY * secondsDelta;
 
-			if ((Options!.OpacityChangeRate > 0 && particle.Opacity < particle.TargetOpacity) ||
-				(Options!.OpacityChangeRate < 0 && particle.Opacity > particle.TargetOpacity))
+			if ((Options.OpacityChangeRate > 0 && particle.Opacity < particle.TargetOpacity) ||
+				(Options.OpacityChangeRate < 0 && particle.Opacity > particle.TargetOpacity))
 			{
 				particle.Opacity += secondsDelta * Options.OpacityChangeRate;
 

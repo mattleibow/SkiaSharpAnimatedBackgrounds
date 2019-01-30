@@ -32,7 +32,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 			particle.TargetOpacity = random.NextDouble() * deltaOpacity + Options.MinOpacity;
 		}
 
-		protected override void OnOptionsUpdate(ParticleOptions? oldOptions, ParticleOptions newOptions)
+		protected override void OnOptionsUpdate(ParticleOptions oldOptions, ParticleOptions newOptions)
 		{
 			base.OnOptionsUpdate(oldOptions, newOptions);
 

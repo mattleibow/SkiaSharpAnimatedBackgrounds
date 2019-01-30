@@ -4,8 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <LangVersion>8.0</LangVersion>
-    <NullableContextOptions>enable</NullableContextOptions>
     <AssemblyName>SkiaSharp.Views.Forms.AnimatedBackground</AssemblyName>
     <RootNamespace>SkiaSharp.Views.Forms.AnimatedBackground</RootNamespace>
   </PropertyGroup>
