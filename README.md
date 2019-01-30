@@ -6,10 +6,10 @@ I am not biased 😜 but ovbiously Xamarin and .NET requires much less code - an
 
 Not sure where this is going, but seems to work just fine.
 
-And, some screenshots... Of course there is a few more platforms that I could have shown, but haven't gotten arounds to that just yet.
+And, some screenshots... _of course, there are a few more platforms that I still need to add to the repo and include screenshots for._
 
-| Android | iOS | UWP |
-| :-: | :-: | :-: |
-| <img src="images/Android.png" width="350" /> | <img src="images/iOS.png" width="350" /> | <img src="images/UWP.png" width="350" /> |
-| **macOS** | **WPF** | **GTK#** |
-| <img src="images/macOS.png" width="350" /> | <img src="images/WPF.png" width="350" /> | <img src="images/GTK.png" width="350" /> |
+| Android | iOS | UWP | Tizen |
+| :-: | :-: | :-: | :-: |
+| <img src="images/Android.png" width="300" /> | <img src="images/iOS.png" width="300" /> | <img src="images/UWP.png" width="300" /> | <img src="images/Tizen.png" width="300" /> |
+| **macOS** | **WPF** | **GTK#** | |
+| <img src="images/macOS.png" width="300" /> | <img src="images/WPF.png" width="300" /> | <img src="images/GTK.png" width="300" /> | |
