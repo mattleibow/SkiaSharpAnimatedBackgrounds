@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Xamarin.Forms;
 
 namespace SkiaSharp.Views.Forms.AnimatedBackground
@@ -9,12 +9,21 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 			nameof(Renderer), typeof(Renderer), typeof(AnimatedBackground), propertyChanged: OnRendererChanged);
 
 		private long lastTicks = -1;
+		private double scale = 1.0;
 
 		public AnimatedBackground()
 		{
+			EnableTouchEvents = true;
 			SizeChanged += OnSizeChanged;
 
 			Device.StartTimer(TimeSpan.FromMilliseconds(1000.0 / 60.0), OnTimerTick);
+		}
+
+		protected override void OnTouch(SKTouchEventArgs e)
+		{
+			base.OnTouch(e);
+
+			Renderer?.Touch(new Point(e.Location.X / scale, e.Location.Y / scale));
 		}
 
 		private void OnSizeChanged(object sender, EventArgs e)
@@ -38,7 +47,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 			if (Renderer?.IsInitialized == false)
 				Renderer?.Init();
 
-			var scale = e.Info.Width / Width;
+			scale = e.Info.Width / Width;
 			canvas.Scale((float)scale);
 
 			Renderer?.Paint(canvas);

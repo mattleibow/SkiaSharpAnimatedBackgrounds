@@ -1,22 +1,24 @@
-﻿using System;
+using System;
+using Xamarin.Forms;
 
 namespace SkiaSharp.Views.Forms.AnimatedBackground
 {
-	public class Particle
+	public class SpotParticle : IParticle
 	{
-		public double CenterX { get; set; } = 0.0;
+		public Rectangle Bounds => 
+            new Rectangle(Center.X - Radius, Center.Y - Radius, Center.X + Radius, Center.Y + Radius);
 
-		public double CenterY { get; set; } = 0.0;
+		public Point Center { get; set; }
 
-		public double DirectionX { get; set; } = 0.0;
+		public double DirectionX { get; set; }
 
 		public double DirectionY { get; set; } = 1.0;
 
-		public double Radius { get; set; } = 0.0;
+		public double Radius { get; set; }
 
-		public double Opacity { get; set; } = 0.0;
+		public double Opacity { get; set; }
 
-		public double TargetOpacity { get; set; } = 0.0;
+		public double TargetOpacity { get; set; }
 
 		public object UserState { get; set; }
 

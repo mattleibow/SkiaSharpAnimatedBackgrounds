@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Xamarin.Forms;
 
 namespace SkiaSharp.Views.Forms.AnimatedBackground
@@ -14,5 +14,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 		public abstract bool Tick(TimeSpan delta);
 
 		public abstract void Paint(SKCanvas canvas);
+
+		public abstract void Touch(Point location);
 	}
 }

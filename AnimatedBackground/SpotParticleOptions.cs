@@ -1,8 +1,8 @@
-﻿using Xamarin.Forms;
+using Xamarin.Forms;
 
 namespace SkiaSharp.Views.Forms.AnimatedBackground
 {
-	public class ParticleOptions
+	public class SpotParticleOptions : IParticleOptions
 	{
 		public SKImage Image { get; set; }
 

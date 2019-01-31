@@ -1,59 +1,42 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace SkiaSharp.Views.Forms.AnimatedBackground
 {
-	public abstract class ParticleRenderer : Renderer
+	public abstract class ParticleRenderer<TParticle, TOptions> : Renderer
+		where TParticle : class, IParticle, new()
+		where TOptions : class, IParticleOptions, new()
 	{
-		private SKImage particleImage;
+		protected readonly List<TParticle> _particles = new List<TParticle>();
+		protected TOptions _options;
 
-		private SKPaint _paint;
-		private ParticleOptions _options;
-		private readonly List<Particle> _particles;
-
-		public ParticleRenderer()
+		protected ParticleRenderer()
 		{
-			// initialize with defaults
-			_options = CreateDefaultParticleOptions();
-			_paint = CreateDefaultPaint();
-			_particles = new List<Particle>();
 		}
 
 		public override bool IsInitialized =>
 			Options != null && (_particles.Count > 0 || Options.ParticleCount == 0);
 
-		public IEnumerable<Particle> Particles => _particles;
+		public IEnumerable<TParticle> Particles => _particles;
 
-		public SKPaint ParticlePaint
-		{
-			get => _paint;
-			set
-			{
-				_paint = value ?? CreateDefaultPaint();
-
-				if (_paint.StrokeWidth <= 0)
-					_paint.StrokeWidth = 1;
-			}
-		}
-
-		public ParticleOptions Options
+		public TOptions Options
 		{
 			get => _options;
 			set
 			{
 				var oldOptions = _options;
-
-				_options = value ?? CreateDefaultParticleOptions();
-
-				particleImage = _options.Image;
-
+				_options = value ?? new TOptions();
 				OnOptionsUpdate(oldOptions, _options);
 			}
 		}
 
 		public override void Init()
 		{
-			Options = CreateDefaultParticleOptions();
+			if (IsInitialized)
+				return;
+
+			Options = new TOptions();
 			_particles.AddRange(GenerateParticles(Options.ParticleCount));
 		}
 
@@ -64,28 +47,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 
 			foreach (var particle in Particles)
 			{
-				if (particle.Opacity <= double.Epsilon)
-					continue;
-
-				if (particleImage != null)
-				{
-					var dst = new SKRect(
-						(float)(particle.CenterX - particle.Radius),
-						(float)(particle.CenterY - particle.Radius),
-						(float)(particle.CenterX + particle.Radius),
-						(float)(particle.CenterY + particle.Radius));
-
-					canvas.DrawImage(particleImage, dst, ParticlePaint);
-				}
-				else
-				{
-					ParticlePaint.Color = Options.BaseColor.ToSKColor().WithAlpha((byte)(particle.Opacity * 255));
-
-					canvas.DrawCircle(
-						new SKPoint((float)particle.CenterX, (float)particle.CenterY),
-						(float)particle.Radius,
-						ParticlePaint);
-				}
+				PaintParticle(canvas, particle);
 			}
 		}
 
@@ -96,7 +58,7 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 
 			foreach (var particle in Particles)
 			{
-				if (!CanvasBounds.Contains(new SKPoint((float)particle.CenterX, (float)particle.CenterY)))
+				if (!CanvasBounds.IntersectsWith(particle.Bounds.ToSKRect()))
 					InitParticle(particle);
 				else
 					UpdateParticle(particle, delta);
@@ -105,9 +67,31 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 			return true;
 		}
 
-		protected abstract void InitParticle(Particle particle);
+		public override void Touch(Point location)
+		{
+			if (!IsInitialized)
+				return;
 
-		protected virtual void OnOptionsUpdate(ParticleOptions oldOptions, ParticleOptions newOptions)
+			foreach (var particle in Particles)
+			{
+				if (particle.Bounds.Contains(location))
+				{
+					TouchParticle(particle, location);
+				}
+			}
+		}
+
+		protected abstract void PaintParticle(SKCanvas canvas, TParticle particle);
+
+		protected abstract void InitParticle(TParticle particle);
+
+		protected abstract void UpdateParticle(TParticle particle, TimeSpan delta);
+
+		protected virtual void TouchParticle(TParticle particle, Point location)
+		{
+		}
+
+		protected virtual void OnOptionsUpdate(TOptions oldOptions, TOptions newOptions)
 		{
 			if (!IsInitialized)
 				return;
@@ -124,46 +108,14 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 			}
 		}
 
-		private IEnumerable<Particle> GenerateParticles(int particleCount)
+		protected virtual IEnumerable<TParticle> GenerateParticles(int particleCount)
 		{
 			for (int i = 0; i < particleCount; i++)
 			{
-				var particle = new Particle();
+				var particle = new TParticle();
 				InitParticle(particle);
 				yield return particle;
 			}
 		}
-
-		private void UpdateParticle(Particle particle, TimeSpan delta)
-		{
-			if (!IsInitialized)
-				return;
-
-			var secondsDelta = delta.TotalSeconds;
-
-			particle.CenterX += particle.DirectionX * secondsDelta;
-			particle.CenterY += particle.DirectionY * secondsDelta;
-
-			if ((Options.OpacityChangeRate > 0 && particle.Opacity < particle.TargetOpacity) ||
-				(Options.OpacityChangeRate < 0 && particle.Opacity > particle.TargetOpacity))
-			{
-				particle.Opacity += secondsDelta * Options.OpacityChangeRate;
-
-				if ((Options.OpacityChangeRate > 0 && particle.Opacity > particle.TargetOpacity) ||
-					(Options.OpacityChangeRate < 0 && particle.Opacity < particle.TargetOpacity))
-					particle.Opacity = particle.TargetOpacity;
-			}
-		}
-
-		private static ParticleOptions CreateDefaultParticleOptions() =>
-			new ParticleOptions();
-
-		private static SKPaint CreateDefaultPaint() =>
-			new SKPaint
-			{
-				StrokeCap = SKStrokeCap.Round,
-				Style = SKPaintStyle.Fill,
-				StrokeWidth = 1
-			};
 	}
 }

@@ -12,13 +12,15 @@
         <!-- the animated background -->
         <anim:AnimatedBackground HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <anim:AnimatedBackground.Renderer>
-                <anim:RandomParticleRenderer />
+                <!-- <anim:SpotParticleRenderer /> -->
+                <anim:BubbleRenderer />
             </anim:AnimatedBackground.Renderer>
         </anim:AnimatedBackground>
 
         <!-- the rest -->
-        <Grid>
-            
+        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+            <Label Text="Welcome to Xamarin.Forms!" FontSize="24"
+                   HorizontalOptions="Center" VerticalOptions="Center" />
         </Grid>
 
     </Grid>
