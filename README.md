@@ -13,3 +13,8 @@ And, some screenshots... _of course, there are a few more platforms that I still
 | <img src="images/Android.png" width="300" /> | <img src="images/iOS.png" width="300" /> | <img src="images/UWP.png" width="300" /> | <img src="images/Tizen.png" width="300" /> |
 | **macOS** | **WPF** | **GTK#** | |
 | <img src="images/macOS.png" width="300" /> | <img src="images/WPF.png" width="300" /> | <img src="images/GTK.png" width="300" /> | |
+
+
+| Spot (solid) | Bubble |
+| :-: | :-: | :-: | :-: |
+| <img src="images/SpotParticle.png" width="300" /> | <img src="images/BubbleParticle.png" width="300" /> |

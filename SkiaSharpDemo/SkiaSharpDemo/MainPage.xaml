@@ -19,8 +19,6 @@
 
         <!-- the rest -->
         <Grid HorizontalOptions="Center" VerticalOptions="Center">
-            <Label Text="Welcome to Xamarin.Forms!" FontSize="24"
-                   HorizontalOptions="Center" VerticalOptions="Center" />
         </Grid>
 
     </Grid>

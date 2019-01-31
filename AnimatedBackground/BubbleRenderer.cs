@@ -58,12 +58,12 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 					center + new SKPoint(0, -targetRadiusSqrt),
 					_paint);
 				canvas.DrawLine(
-					center + new SKPoint(-radiusSqrt, 0),
-					center + new SKPoint(-targetRadiusSqrt, 0),
+					center + new SKPoint(radiusSqrt, 0),
+					center + new SKPoint(targetRadiusSqrt, 0),
 					_paint);
 				canvas.DrawLine(
-					center + new SKPoint(-radiusSqrt, -0),
-					center + new SKPoint(-targetRadiusSqrt, -0),
+					center + new SKPoint(-radiusSqrt, 0),
+					center + new SKPoint(-targetRadiusSqrt, 0),
 					_paint);
 			}
 		}
