@@ -16,5 +16,5 @@ And, some screenshots... _of course, there are a few more platforms that I still
 
 
 | Spot (solid) | Bubble |
-| :-: | :-: | :-: | :-: |
+| :-: | :-: |
 | <img src="images/SpotParticle.png" width="300" /> | <img src="images/BubbleParticle.png" width="300" /> |
