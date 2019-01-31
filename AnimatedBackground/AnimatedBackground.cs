@@ -77,7 +77,10 @@ namespace SkiaSharp.Views.Forms.AnimatedBackground
 		private static void OnRendererChanged(BindableObject bindable, object oldValue, object newValue)
 		{
 			if (bindable is AnimatedBackground background)
+			{
 				background.InvalidateSurface();
+				background.OnSizeChanged(background, EventArgs.Empty);
+			}
 		}
 	}
 }

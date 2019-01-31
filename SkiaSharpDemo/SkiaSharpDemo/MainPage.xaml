@@ -3,22 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:anim="clr-namespace:SkiaSharp.Views.Forms.AnimatedBackground;assembly=SkiaSharp.Views.Forms.AnimatedBackground"
              xmlns:views="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:local="clr-namespace:SkiaSharpDemo"
              x:Class="SkiaSharpDemo.MainPage"
+             ios:Page.SafeAreaInsets="{Binding SafeAreaInsets, Mode=OneWayToSource}"
              Title="Animated Background">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Layout" ApplyToDerivedTypes="true">
+                <Setter Property="InputTransparent" Value="true" />
+                <Setter Property="CascadeInputTransparent" Value="false" />
+            </Style>
+            <Style TargetType="Label" ApplyToDerivedTypes="true">
+                <Setter Property="InputTransparent" Value="true" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid>
 
         <!-- the animated background -->
-        <anim:AnimatedBackground HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <anim:AnimatedBackground.Renderer>
-                <!-- <anim:SpotParticleRenderer /> -->
-                <anim:BubbleRenderer />
-            </anim:AnimatedBackground.Renderer>
-        </anim:AnimatedBackground>
+        <anim:AnimatedBackground Renderer="{Binding SelectedRenderer}"
+                                 HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
 
         <!-- the rest -->
-        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+        <Grid Padding="{Binding SafeAreaInsets}">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="Welcome to" FontSize="24" HorizontalOptions="Center" />
+                <Label Text="Xamarin.Forms" FontSize="36" HorizontalOptions="Center" />
+                <Label Text="and" FontSize="24" HorizontalOptions="Center" />
+                <Label Text="SkiaSharp" FontSize="36" HorizontalOptions="Center" />
+            </StackLayout>
+
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="End" Padding="12">
+                <Label Text="Pick a renderer:" FontSize="14" />
+                <Picker ItemsSource="{Binding Renderers}" SelectedIndex="{Binding SelectedIndex}" />
+            </StackLayout>
         </Grid>
 
     </Grid>
